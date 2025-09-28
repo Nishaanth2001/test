@@ -3,6 +3,10 @@ from Producer import say_hello
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
 @app.route('/send', methods=['POST'])
 def send_message():
     data = request.get_json()
@@ -17,5 +21,6 @@ def send_message():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+
+#     app.run(debug=True)
