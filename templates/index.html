@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Send to Endpoint</title>
+    <meta charset="UTF-8">
+    <title>Flask App Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border-left: 4px solid #00796b;
+        }
+    </style>
 </head>
 <body>
-  <h1>Send Text to API</h1>
-  <input type="text" id="inputText" placeholder="Enter your text" />
-  <button onclick="sendData()">Send</button>
+    <h1>Flask + Frontend (Render)</h1>
 
-  <p id="response"></p>
+    <button onclick="fetchData()">Call Backend</button>
 
-  <script>
-    async function sendData() {
-      const input = document.getElementById("inputText").value;
+    <div id="response"></div>
 
-      try {
-        const response = await fetch("https://test-k88m.onrender.com/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ text: input })
-        });
-
-        const result = await response.json();
-        document.getElementById("response").textContent = "Response: " + JSON.stringify(result);
-      } catch (error) {
-        document.getElementById("response").textContent = "Error: " + error.message;
-      }
-    }
-  </script>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/data');  // relative path
+                const data = await response.json();
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('response').innerText = 'Error: ' + error;
+            }
+        }
+    </script>
 </body>
 </html>
