@@ -45,7 +45,11 @@
                 });
 
                 const result = await response.json();
-                document.getElementById('response').innerText = JSON.stringify(result, null, 2);
+                if (result.redirect_url) {
+                    window.location.href = result.redirect_url;  // Redirect user to /welcome/{key}
+                } else if (result.error) {
+                    document.getElementById('response').innerText = 'Error: ' + result.error;
+                }
             } catch (error) {
                 document.getElementById('response').innerText = 'Error: ' + error;
             }
