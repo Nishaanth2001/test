@@ -9,7 +9,7 @@ def index():
 
 @app.route('/send', methods=['POST'])
 def send_message():
-    data = request.get_json()            #get the data from front end
+    data = request.get_json()             #get the data from front end
     key = data.get('key')
 
     if not key:
@@ -17,15 +17,14 @@ def send_message():
 
     try:
         message = say_hello(key)
-        return jsonify({'message': message, 'status': 'sent'}), 200, redirect(url_for('welcome', ket=key))                      #send the data to frontend
+        return jsonify({'redirect_url': f'/welcome/{message}'})                    #send the data to frontend
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
 @app.route('/welcome/<ket>')
 def welcome(ket):
-    return f"Welcome {ket}"
+    return ket
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
